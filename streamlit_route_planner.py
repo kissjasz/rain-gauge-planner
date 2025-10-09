@@ -594,7 +594,31 @@ def main():
     """แอปพลิเคชันหลัก"""
     try:
         init_session_state()
-        
+        # ====== ตรวจสอบ query parameter ที่มาจาก popup ======
+        query_params = st.query_params
+
+        # ✅ กรณียืนยันเลือกสถานี
+        if "confirm" in query_params:
+            sid = query_params["confirm"]
+            sel = st.session_state.get("selected_stations", [])
+            if sid not in sel:
+                sel.append(sid)
+                st.session_state.selected_stations = sel
+                st.success(f"✅ ยืนยันเลือกสถานี {sid}")
+            st.query_params.clear()
+            st.experimental_rerun()
+
+        # ❌ กรณียกเลิกเลือกสถานี
+        if "remove" in query_params:
+            sid = query_params["remove"]
+            sel = st.session_state.get("selected_stations", [])
+            if sid in sel:
+                sel.remove(sid)
+                st.session_state.selected_stations = sel
+                st.warning(f"❌ ยกเลิกเลือกสถานี {sid}")
+            st.query_params.clear()
+            st.experimental_rerun()
+# =======================================================
         st.title("📡 Rain Gauge Station Viewer & Interactive Route Planner")
         
         # โหลดข้อมูล
@@ -1111,6 +1135,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
