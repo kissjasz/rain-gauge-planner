@@ -892,7 +892,7 @@ def main():
                 station_options.append(display_name)
                 station_name_map[display_name] = station_id
             
-            col1,  = st.columns(2)
+            col1, col2 = st.columns(2)
             with col1:
                 # ให้ฐานหลักเป็น default ถ้ามี
                 default_start = 0
@@ -1111,6 +1111,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
