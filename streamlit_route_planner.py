@@ -2,6 +2,13 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 st.set_page_config(page_title="Rain Gauge Monitor", layout="wide")
+st.markdown("""
+    <style>
+        section[data-testid="stSidebar"][aria-expanded="true"]{
+            width: 0px;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
 import pandas as pd
 import json
@@ -1128,6 +1135,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
