@@ -303,6 +303,7 @@ def init_session_state():
         'last_map_click': None,
         'last_map_click_time': 0.0,
         'map_version': 0
+        'pending_station': None,
     }
     
     for key, default_value in defaults.items():
@@ -556,15 +557,17 @@ def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False
                     </div>
                     """
                 def color_by_days(d):
-                    if d is None or not pd.notna(d): return "blue"
-                    d = int(d)
-                    if d >= 60: return "darkred"
-                    if d >= 30: return "red"
-                    if d >= 14: return "orange"
-                    return "green"
+                    if d is None or not pd.notna(d): 
+                        return "blue"
+                    v = int(d)
+                    if v > 60: 
+                        return "red"       # > 60 วัน = แดง
+                    if v > 31: 
+                        return "orange"    # 32–60 วัน = เหลือง
+                    return "green"         # ≤ 31 วัน = เขียว
 
                 if not is_base_station:
-                    color = color_by_days(dnm_val) if dnm_val is not None else color
+                    color = color_by_days(dnm_val)
                 # เพิ่ม marker
                 folium.Marker(
                     [lat, lon],
@@ -765,37 +768,33 @@ def main():
                             if closest_station:
                                 try:
                                     current_stations = st.session_state.get('selected_stations', [])
-                                    
-                                    if closest_station in current_stations:
-                                        # ยกเลิกการเลือก
-                                        current_stations.remove(closest_station)
-                                        station_type = "ฐานปฏิบัติการ" if closest_station == BASE_LOCATION['station_id'] else "สถานีวัด"
-                                        st.success(f"❌ ยกเลิกการเลือก: {closest_station} ({station_type})")
-                                    else:
-                                        # เลือกใหม่
-                                        MAX_STATIONS = 100
-                                        if len(current_stations) < MAX_STATIONS:
-                                            current_stations.append(closest_station)
-                                            
-                                            if closest_station == BASE_LOCATION['station_id']:
-                                                station_name = BASE_LOCATION['name_th']
-                                            else:
-                                                station_name = safe_get_station_name(df_filtered, closest_station)
-                                            
-                                            st.success(f"✅ เลือก: {closest_station} - {station_name}")
+                                    pending = st.session_state.get('pending_station')
+
+                                    if pending == closest_station:
+                                        # คลิกซ้ำสถานีเดิม = ยืนยัน
+                                        if closest_station in current_stations:
+                                            current_stations.remove(closest_station)
+                                            st.success(f"❌ ยกเลิกการเลือก: {closest_station}")
                                         else:
-                                            st.warning(f"⚠️ เลือกได้สูงสุด {MAX_STATIONS} สถานี")
-                                    
-                                    st.session_state.selected_stations = current_stations
-                                    # บันทึกคลิกล่าสุดเพื่อกันการวนซ้ำ
+                                            MAX_STATIONS = 100
+                                            if len(current_stations) < MAX_STATIONS:
+                                                current_stations.append(closest_station)
+                                                st.success(f"✅ เลือก: {closest_station}")
+                                            else:
+                                                st.warning(f"⚠️ เลือกได้สูงสุด {MAX_STATIONS} สถานี")
+                                        st.session_state.selected_stations = current_stations
+                                        st.session_state.pending_station = None  # เคลียร์สถานะค้าง
+                                    else:
+                                        # คลิกครั้งที่ 1 = แสดงข้อมูล รอคลิกยืนยัน
+                                        st.session_state.pending_station = closest_station
+                                        st.info(f"คลิกสถานีเดิมอีกครั้งเพื่อยืนยัน: {closest_station}")
+
+                                    # บันทึกคลิกล่าสุดและรีเฟรช
                                     st.session_state.last_map_click = current_click
                                     st.session_state.last_map_click_time = now_ts
-                                    # bump map version เพื่อรีอินสแตนซ์แผนที่และตัวจับ event
                                     st.session_state.map_version = st.session_state.get('map_version', 0) + 1
-                                    # rerun เพื่อให้ UI อัปเดตทันที พร้อมคีย์ใหม่ป้องกันวนลูป
                                     smart_rerun()
-                                    # ไม่ต้องบังคับ rerun ให้ Streamlit จัดการเอง
-                                    
+
                                 except Exception as selection_error:
                                     st.error(f"ข้อผิดพลาดในการจัดการการเลือก: {str(selection_error)}")
                             else:
@@ -1115,6 +1114,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
