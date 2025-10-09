@@ -1,4 +1,6 @@
 import streamlit as st
+import gspread
+from google.oauth2.service_account import Credentials
 st.set_page_config(page_title="Rain Gauge Monitor", layout="wide")
 
 import pandas as pd
@@ -12,6 +14,31 @@ import math
 import time
 from typing import List, Dict, Tuple, Optional
 
+@st.cache_data(ttl=300)
+def load_sheet_days() -> pd.DataFrame:
+    sa = st.secrets["google_service_account"]
+    creds = Credentials.from_service_account_info(
+        sa, scopes=["https://www.googleapis.com/auth/spreadsheets.readonly"]
+    )
+    gc = gspread.authorize(creds)
+    sh = gc.open_by_key(sa["SHEET_ID"])
+    ws = sh.worksheet(st.secrets["google_service_account"]["SHEET_TAB"])
+    values = ws.get(st.secrets["google_service_account"]["SHEET_RANGE"])  # A..C
+
+    rows = []
+    for r in values:
+        if not r:
+            continue
+        station_id = (r[0] if len(r)>=1 else "").strip()
+        days_raw   = (r[2] if len(r)>=3 else "").strip()
+        if station_id:
+            try:
+                days = int(float(days_raw)) if days_raw != "" else None
+            except:
+                days = None
+            rows.append({"station_id": station_id, "days_not_maintained": days})
+    return pd.DataFrame(rows)
+    
 # ✅ ข้อมูลตำแหน่งฐาน
 BASE_LOCATION = {
     'station_id': 'BASE01',
@@ -483,7 +510,19 @@ def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False
                     color = 'blue'
                     icon = 'tint'
                     prefix = 'fa'
-                
+                # ... หลังจากกำหนด is_base_station, is_selected, color, icon แล้ว
+                dnm_val = None
+                try:
+                    row_info = df_filtered[df_filtered['station_id'] == station_id]
+                    if not row_info.empty and 'days_not_maintained' in row_info.columns:
+                        dnm_val = row_info.iloc[0].get('days_not_maintained')
+                except:
+                    pass
+
+                days_txt = (
+                    f"<div style='margin-top:4px;'>🛠️ ไม่ได้บำรุงมา <b>{int(dnm_val)}</b> วัน</div>"
+                    if pd.notna(dnm_val) else ""
+                )
                 # สร้าง popup text
                 if is_base_station:
                     popup_text = f"""
@@ -505,13 +544,23 @@ def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False
                     <b style="color: {'red' if is_selected else 'blue'};">{station_id}</b><br>
                     <strong>{name_th}</strong><br>
                     ตำแหน่ง: {lat:.4f}, {lon:.4f}<br>
+                    {days_txt}
                     <div style="margin: 5px 0; padding: 5px; background-color: {'#ffebee' if is_selected else '#e3f2fd'}; border-radius: 3px;">
                     สถานะ: {'✅ เลือกแล้ว' if is_selected else '⚪ ยังไม่เลือก'}
                     </div>
                     <small style="color: #666;">💡 คลิกที่ marker เพื่อ{'ยกเลิก' if is_selected else 'เลือก'}</small>
                     </div>
                     """
-                
+                def color_by_days(d):
+                    if d is None or not pd.notna(d): return "blue"
+                    d = int(d)
+                    if d >= 60: return "darkred"
+                    if d >= 30: return "red"
+                    if d >= 14: return "orange"
+                    return "green"
+
+                if not is_base_station:
+                    color = color_by_days(dnm_val) if dnm_val is not None else color
                 # เพิ่ม marker
                 folium.Marker(
                     [lat, lon],
@@ -540,6 +589,14 @@ def main():
         # โหลดข้อมูล
         with st.spinner("กำลังโหลดข้อมูลสถานี..."):
             df = load_station_data()
+            try:
+                sheet_df = load_sheet_days()
+                if not sheet_df.empty:
+                    df = df.merge(sheet_df, on="station_id", how="left")
+                else:
+                    st.warning("ไม่พบข้อมูลจาก Google Sheet")
+            except Exception as e:
+                st.warning(f"โหลดชีตไม่ได้: {e}")
         
         if df.empty:
             st.error("❌ ไม่สามารถโหลดข้อมูลสถานีได้")
@@ -1052,4 +1109,5 @@ streamlit-folium>=0.13.0
                 requirements,
                 "requirements.txt",
                 "text/plain"
+
             )
