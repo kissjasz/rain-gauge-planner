@@ -770,8 +770,8 @@ def main():
                                     current_stations = st.session_state.get('selected_stations', [])
                                     pending = st.session_state.get('pending_station')
 
+                                    # คลิกซ้ำสถานีเดิม = ยืนยัน
                                     if pending == closest_station:
-                                        # คลิกซ้ำสถานีเดิม = ยืนยัน
                                         if closest_station in current_stations:
                                             current_stations.remove(closest_station)
                                             st.success(f"❌ ยกเลิกการเลือก: {closest_station}")
@@ -779,26 +779,23 @@ def main():
                                             MAX_STATIONS = 100
                                             if len(current_stations) < MAX_STATIONS:
                                                 current_stations.append(closest_station)
-                                                st.success(f"✅ เลือก: {closest_station}")
+                                                st.success(f"✅ ยืนยันเลือก: {closest_station}")
                                             else:
                                                 st.warning(f"⚠️ เลือกได้สูงสุด {MAX_STATIONS} สถานี")
-                                        st.session_state.selected_stations = current_stations
-                                        st.session_state.pending_station = None  # เคลียร์สถานะค้าง
-                                    else:
-                                        # คลิกครั้งที่ 1 = แสดงข้อมูล รอคลิกยืนยัน
-                                        st.session_state.pending_station = closest_station
-                                        st.info(f"คลิกสถานีเดิมอีกครั้งเพื่อยืนยัน: {closest_station}")
 
-                                    # บันทึกคลิกล่าสุดและรีเฟรช
-                                    st.session_state.last_map_click = current_click
-                                    st.session_state.last_map_click_time = now_ts
-                                    st.session_state.map_version = st.session_state.get('map_version', 0) + 1
-                                    smart_rerun()
+                                        st.session_state.selected_stations = current_stations
+                                        st.session_state.pending_station = None  # เคลียร์รอคลิก
+                                        # ไม่เรียก rerun ตรงนี้ ป้องกัน refresh map
+                                    else:
+                                        # คลิกครั้งแรก แค่แสดง popup ข้อมูล ไม่ rerun
+                                        st.session_state.pending_station = closest_station
+                                        st.info(f"คลิกอีกครั้งเพื่อยืนยัน: {closest_station}")
 
                                 except Exception as selection_error:
-                                    st.error(f"ข้อผิดพลาดในการจัดการการเลือก: {str(selection_error)}")
+                                    st.error(f"ข้อผิดพลาด: {selection_error}")
+
                             else:
-                                st.caption("คลิกใกล้ marker สถานีเพื่อเลือก (≤ 1–2 km หากซูมไกล)")
+                                st.caption("คลิกใกล้ marker เพื่อเลือก (≤ 1–2 km หากซูมไกล)")
                             
                 except ImportError:
                     st.error("❌ กรุณาติดตั้ง streamlit-folium: pip install streamlit-folium")
@@ -1114,6 +1111,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
