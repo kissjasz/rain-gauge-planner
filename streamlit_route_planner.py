@@ -551,7 +551,7 @@ def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False
                     # ปุ่มใน popup ตามสถานะ
                     if not is_selected:
                         action_btn_html = f"""
-                        <a href="{confirm_url}" target="_self"
+                        <a href="{confirm_url}" target="_top"
                            style="display:inline-block;background:#4CAF50;color:white;
                                   padding:6px 10px;border-radius:6px;text-decoration:none;">
                             ✅ ยืนยันเลือกสถานีนี้
@@ -559,7 +559,7 @@ def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False
                         """
                     else:
                         action_btn_html = f"""
-                        <a href="{remove_url}" target="_self"
+                        <a href="{remove_url}" target="_top"
                            style="display:inline-block;background:#f44336;color:white;
                                   padding:6px 10px;border-radius:6px;text-decoration:none;">
                             ❌ ยกเลิกเลือกสถานีนี้
@@ -1145,6 +1145,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
