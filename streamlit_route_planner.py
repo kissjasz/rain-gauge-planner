@@ -545,26 +545,6 @@ def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False
                     </div>
                     """
                 else:
-                    js_confirm = f"javascript:(function(){{var u=new URL(window.top.location.href);u.searchParams.set('confirm','{station_id}');window.top.location.href=u.toString();}})();"
-                    js_remove  = f"javascript:(function(){{var u=new URL(window.top.location.href);u.searchParams.set('remove','{station_id}');window.top.location.href=u.toString();}})();"
-
-                    # ปุ่มใน popup ตามสถานะ
-                    if not is_selected:
-                        action_btn_html = f"""
-                        <a href="{js_confirm}"
-                           style="display:inline-block;background:#4CAF50;color:white;
-                                  padding:6px 10px;border-radius:6px;text-decoration:none;">
-                            ✅ ยืนยันเลือกสถานีนี้
-                        </a>
-                        """
-                    else:
-                        action_btn_html = f"""
-                        <a href="{js_remove}"
-                           style="display:inline-block;background:#f44336;color:white;
-                                  padding:6px 10px;border-radius:6px;text-decoration:none;">
-                            ❌ ยกเลิกเลือกสถานีนี้
-                        </a>
-                        """
                     popup_text = f"""
                     <div style="min-width:200px;text-align:center;">
                     <b style="color:{'red' if is_selected else 'blue'};">{station_id}</b><br>
@@ -820,20 +800,29 @@ def main():
         else:
             st.warning("ไม่มีข้อมูลสถานีสำหรับแสดงบนแผนที่")
 
-        # ยืนยันเพิ่มจาก pending_station แบบคลิกครั้งแรก-ค่อยยืนยัน
+        # ✅ ยืนยัน/ยกเลิก จาก pending_station ใต้แผนที่
         pending = st.session_state.get("pending_station")
         if pending:
-            st.info(f"สถานีที่เลือกค้าง: {pending}")
-            if st.button("➕ เพิ่มสถานีที่เลือก (จากแผนที่)", key="add_pending_station"):
-                sel = st.session_state.get("selected_stations", [])
-                if pending not in sel:
-                    sel.append(pending)
-                    st.session_state.selected_stations = sel
-                    st.success(f"✅ ยืนยันเพิ่มสถานี {pending}")
-                else:
-                    st.info("สถานีนี้ถูกเลือกอยู่แล้ว")
-                st.session_state.pending_station = None
-                st.rerun()
+            colA, colB = st.columns([2,1])
+            with colA:
+                st.info(f"สถานีที่เลือกค้าง: {pending}  — กดยืนยันเพื่อเพิ่มเข้าชุดที่เลือก")
+            with colB:
+                c1, c2 = st.columns(2)
+                with c1:
+                    if st.button("✅ ยืนยันเพิ่ม", key="confirm_pending"):
+                        sel = st.session_state.get("selected_stations", [])
+                        if pending not in sel:
+                            sel.append(pending)
+                            st.session_state.selected_stations = sel
+                            st.success(f"เพิ่ม {pending} แล้ว")
+                        st.session_state.pending_station = None
+                        st.rerun()
+                with c2:
+                    if st.button("✖️ ยกเลิก", key="cancel_pending"):
+                        st.session_state.pending_station = None
+                        st.rerun()
+        else:
+            st.caption("แตะ marker เพื่อเลือกสถานี แล้วมาคลิกปุ่มยืนยันที่นี่")
                 
         # ส่วนจัดการสถานีที่เลือก
         st.subheader("📝 จัดการสถานีสำหรับวางแผนเส้นทาง")
@@ -1139,6 +1128,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
