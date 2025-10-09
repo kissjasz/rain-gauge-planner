@@ -855,7 +855,7 @@ def main():
             
             MAX_STATIONS = 100
             selected_new_stations = st.multiselect(
-                "เลือกสถานีที่ต้องการเพิ่ม:/nหมายเหตุหากกดเพิ่มสถานีที่เลือกแล้วให้กดปุ่มเพิ่มสถานีที่เลือกซ้ำเพื่อยืนยัน",
+                "เลือกสถานีที่ต้องการเพิ่ม:\nหมายเหตุ: หากกดเพิ่มสถานีที่เลือกแล้ว ให้กดปุ่มเพิ่มสถานีที่เลือกซ้ำเพื่อยืนยัน",
                 options=available_stations['station_id'].tolist(),
                 format_func=format_station_option,
                 max_selections=max(0, MAX_STATIONS - len(selected_stations)),
@@ -1111,6 +1111,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
