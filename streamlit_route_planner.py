@@ -623,7 +623,7 @@ def main():
                 st.session_state.selected_stations = sel
                 st.success(f"✅ ยืนยันเลือกสถานี {sid}")
             st.query_params.clear()   # clear query
-            st.experimental_rerun()
+            st.rerun()
 
         if "remove" in q:
             sid = q["remove"][0]
@@ -632,7 +632,7 @@ def main():
                 st.session_state.selected_stations = sel
                 st.warning(f"❌ ยกเลิกเลือกสถานี {sid}")
             st.query_params.clear()   # clear query
-            st.experimental_rerun()
+            st.rerun()
 # =======================================================
         st.title("📡 Rain Gauge Station Viewer & Interactive Route Planner")
         
@@ -1145,6 +1145,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
