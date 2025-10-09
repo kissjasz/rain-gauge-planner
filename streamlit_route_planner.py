@@ -890,7 +890,7 @@ def main():
                     current_stations = set(selected_stations)
                     new_stations = current_stations.union(set(selected_new_stations))
                     st.session_state.selected_stations = list(new_stations)
-                    st.success(f"เพิ่มสถานีสำเร็จ {len(selected_new_stations)} แห่ง")
+                    st.success(f"กดปุ่ม "➕ เพิ่มสถานีที่เลือก" เพื่อยืนยันสถานีจำนวน {len(selected_new_stations)} แห่ง")
                 except Exception as add_error:
                     st.error(f"ข้อผิดพลาดในการเพิ่มสถานี: {str(add_error)}")
         else:
@@ -1134,6 +1134,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
