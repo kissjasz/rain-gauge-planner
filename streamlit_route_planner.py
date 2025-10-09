@@ -23,20 +23,24 @@ def load_sheet_days() -> pd.DataFrame:
     gc = gspread.authorize(creds)
     sh = gc.open_by_key(sa["SHEET_ID"])
     ws = sh.worksheet(st.secrets["google_service_account"]["SHEET_TAB"])
-    values = ws.get(st.secrets["google_service_account"]["SHEET_RANGE"])  # A..C
+    values = ws.get(st.secrets["google_service_account"]["SHEET_RANGE"])  # B..C
 
     rows = []
     for r in values:
-        if not r:
+        if len(r) < 2:
             continue
-        station_id = (r[0] if len(r)>=1 else "").strip()
-        days_raw   = (r[2] if len(r)>=3 else "").strip()
-        if station_id:
-            try:
-                days = int(float(days_raw)) if days_raw != "" else None
-            except:
-                days = None
-            rows.append({"station_id": station_id, "days_not_maintained": days})
+        station_id = (r[0] or "").strip()       # คอลัมน์ B
+        days_raw = (r[1] or "").strip()         # คอลัมน์ C
+        if not station_id:
+            continue
+
+        # แยกเลขออกจาก string เช่น "❌ 62 วัน" → 62
+        import re
+        match = re.search(r"(\d+)", days_raw)
+        days_val = int(match.group(1)) if match else None
+
+        rows.append({"station_id": station_id, "days_not_maintained": days_val})
+
     return pd.DataFrame(rows)
     
 # ✅ ข้อมูลตำแหน่งฐาน
@@ -1112,4 +1116,5 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
