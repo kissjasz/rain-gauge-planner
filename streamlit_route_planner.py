@@ -613,7 +613,7 @@ def main():
     try:
         init_session_state()
         # ---- handle confirm/remove from popup (must be at very top of main) ----
-        q = st.experimental_get_query_params()
+        q = st.query_params
         sel = st.session_state.get("selected_stations", [])
 
         if "confirm" in q:
@@ -622,7 +622,7 @@ def main():
                 sel.append(sid)
                 st.session_state.selected_stations = sel
                 st.success(f"✅ ยืนยันเลือกสถานี {sid}")
-            st.experimental_set_query_params()   # clear query
+            st.query_params.clear()   # clear query
             st.experimental_rerun()
 
         if "remove" in q:
@@ -631,7 +631,7 @@ def main():
                 sel.remove(sid)
                 st.session_state.selected_stations = sel
                 st.warning(f"❌ ยกเลิกเลือกสถานี {sid}")
-            st.experimental_set_query_params()   # clear query
+            st.query_params.clear()   # clear query
             st.experimental_rerun()
 # =======================================================
         st.title("📡 Rain Gauge Station Viewer & Interactive Route Planner")
@@ -1145,6 +1145,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
