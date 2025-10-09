@@ -545,18 +545,26 @@ def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False
                     </div>
                     """
                 else:
-                    popup_text = f"""
-                    <div style="min-width: 200px; text-align: center;">
-                    <b style="color: {'red' if is_selected else 'blue'};">{station_id}</b><br>
-                    <strong>{name_th}</strong><br>
-                    ตำแหน่ง: {lat:.4f}, {lon:.4f}<br>
-                    {days_txt}
-                    <div style="margin: 5px 0; padding: 5px; background-color: {'#ffebee' if is_selected else '#e3f2fd'}; border-radius: 3px;">
-                    สถานะ: {'✅ เลือกแล้ว' if is_selected else '⚪ ยังไม่เลือก'}
-                    </div>
-                    <small style="color: #666;">💡 คลิกที่ marker เพื่อ{'ยกเลิก' if is_selected else 'เลือก'}</small>
-                    </div>
-                    """
+                    confirm_url = f"?confirm={station_id}"
+                    remove_url  = f"?remove={station_id}"
+
+                    # ปุ่มใน popup ตามสถานะ
+                    if not is_selected:
+                        action_btn_html = f"""
+                        <a href="{confirm_url}" target="_self"
+                           style="display:inline-block;background:#4CAF50;color:white;
+                                  padding:6px 10px;border-radius:6px;text-decoration:none;">
+                            ✅ ยืนยันเลือกสถานีนี้
+                        </a>
+                        """
+                    else:
+                        action_btn_html = f"""
+                        <a href="{remove_url}" target="_self"
+                           style="display:inline-block;background:#f44336;color:white;
+                                  padding:6px 10px;border-radius:6px;text-decoration:none;">
+                            ❌ ยกเลิกเลือกสถานีนี้
+                        </a>
+                        """
                 def color_by_days(d):
                     if d is None or not pd.notna(d): 
                         return "blue"
@@ -1135,6 +1143,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
