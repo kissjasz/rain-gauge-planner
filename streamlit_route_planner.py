@@ -551,7 +551,7 @@ def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False
                     <strong>{name_th}</strong><br>
                     ตำแหน่ง: {lat:.4f}, {lon:.4f}<br>
                     {days_txt}
-                    <div style="margin-top:8px;">{action_btn_html}</div>
+                    <div style="margin-top:8px;color:#666;">แตะเพื่อดูข้อมูล แล้วไปกดยืนยันใต้แผนที่</div>
                     </div>
                     """
                         
@@ -1128,6 +1128,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
