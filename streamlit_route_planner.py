@@ -686,7 +686,7 @@ def main():
                 safe_update_session_state('map_mode', 'select')
         
         with col2:
-            if st.button("🛣️ โหมดแสดงเส้นทาง", help="แสดงเส้นทางบนแผนที่"):
+            if st.button("🛣️ แสดงเส้นทางบนแผนที่(ยังไม่เปิดใช้งานระบบนี้)", help="แสดงเส้นทางบนแผนที่"):
                 safe_update_session_state('map_mode', 'route')
         
         with col3:
@@ -892,7 +892,7 @@ def main():
                 station_options.append(display_name)
                 station_name_map[display_name] = station_id
             
-            col1, col2 = st.columns(2)
+            col1,  = st.columns(2)
             with col1:
                 # ให้ฐานหลักเป็น default ถ้ามี
                 default_start = 0
@@ -910,7 +910,7 @@ def main():
                 )
                 start_station = station_name_map[start_display]
             
-            with col2:
+            with :
                 # ให้ฐานหลักเป็น default สำหรับ end ถ้ามี
                 default_end = len(station_options) - 1
                 if BASE_LOCATION['station_id'] in selected_stations:
@@ -1015,10 +1015,10 @@ def main():
         with st.expander("📋 คำนวณแผนการตรวจสอบ", expanded=False):
             total_stations = len(df_filtered)
             
-            col1, col2, col3 = st.columns(3)
+            col1, , col3 = st.columns(3)
             with col1:
                 max_days_available = st.number_input("ระยะเวลาทั้งหมด (วัน):", min_value=1, value=30)
-            with col2:
+            with :
                 avg_stations_per_day = st.number_input("สถานีที่ตรวจได้ต่อวัน:", min_value=1, value=7)
             with col3:
                 target_stations = st.number_input("จำนวนที่ต้องการตรวจ:", min_value=1, value=min(total_stations, 50))
@@ -1111,6 +1111,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
