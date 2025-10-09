@@ -1,0 +1,602 @@
+{
+    "G1001": {
+        "name_th": "สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง วิทยาเขตชุมพร",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1001",
+        "lat": 10.732066,
+        "lon": 99.365284
+    },
+    "G1002": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านบางแหวน",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1002",
+        "lat": 10.89751,
+        "lon": 99.430524
+    },
+    "G1003": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลสลุย",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1003",
+        "lat": 10.872415,
+        "lon": 99.24979
+    },
+    "G1004": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านธรรมเจริญ",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1004",
+        "lat": 10.86492,
+        "lon": 99.114881
+    },
+    "G1005": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านพันวาล",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1005",
+        "lat": 10.777483,
+        "lon": 99.004612
+    },
+    "G1006": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลท่าแซะ",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1006",
+        "lat": 10.663167,
+        "lon": 99.19347
+    },
+    "G1007": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลวังใหม่",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1007",
+        "lat": 10.502423,
+        "lon": 99.026354
+    },
+    "G1008": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบางหมาก",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1008",
+        "lat": 10.42585,
+        "lon": 99.183896
+    },
+    "G1009": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านน้ำฉา",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1009",
+        "lat": 10.309452,
+        "lon": 99.023025
+    },
+    "G1010": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลช่องไม้แก้ว",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1010",
+        "lat": 10.137002,
+        "lon": 99.054315
+    },
+    "G1011": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลเขาค่าย",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1011",
+        "lat": 10.121726,
+        "lon": 98.896399
+    },
+    "G1012": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลนาพญา",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1012",
+        "lat": 9.89495,
+        "lon": 99.105081
+    },
+    "G1013": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านในโหมง",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1013",
+        "lat": 9.86925,
+        "lon": 98.92967
+    },
+    "G1014": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านคลองสง",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1014",
+        "lat": 9.74044,
+        "lon": 98.971332
+    },
+    "G1015": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลลำเลียง",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1015",
+        "lat": 10.327637,
+        "lon": 98.774235
+    },
+    "G1016": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลทรายแดง",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1016",
+        "lat": 10.136066,
+        "lon": 98.689444
+    },
+    "G1017": {
+        "name_th": "เทศบาลเมืองบางริ้น",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1017",
+        "lat": 9.888354,
+        "lon": 98.627485
+    },
+    "G1018": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลราชกรูด",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1018",
+        "lat": 9.74716,
+        "lon": 98.596935
+    },
+    "G1019": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านเคียนงาม",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1019",
+        "lat": 9.536727,
+        "lon": 98.580808
+    },
+    "G1020": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลพงศ์ประศาสน์",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1020",
+        "lat": 11.150628,
+        "lon": 99.481538
+    },
+    "G1021": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพบ้านห้วยไก่ต่อ",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1021",
+        "lat": 11.379658,
+        "lon": 99.474398
+    },
+    "G1022": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลช้างขวา",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1022",
+        "lat": 9.136295,
+        "lon": 99.444607
+    },
+    "G1023": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลคลองน้อย",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1023",
+        "lat": 9.162698,
+        "lon": 99.266996
+    },
+    "G1024": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านยางโพรง",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1024",
+        "lat": 9.420897,
+        "lon": 98.925827
+    },
+    "G1025": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลป่าเว",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1025",
+        "lat": 9.425665,
+        "lon": 99.129125
+    },
+    "G1026": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลคลองพา",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1026",
+        "lat": 9.605583,
+        "lon": 99.06838
+    },
+    "G1027": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลตะกุกเหนือ บ.หัวสะพาน",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1027",
+        "lat": 9.206438,
+        "lon": 98.953157
+    },
+    "G1028": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลถ้ำสิงขร",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1028",
+        "lat": 9.015625,
+        "lon": 99.048577
+    },
+    "G1029": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านบางเจริญ",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1029",
+        "lat": 11.010548,
+        "lon": 99.261134
+    },
+    "G1030": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลทรายทอง",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1030",
+        "lat": 11.033109,
+        "lon": 99.415632
+    },
+    "G1031": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลทองมงคล",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1031",
+        "lat": 11.156369,
+        "lon": 99.386224
+    },
+    "G1032": {
+        "name_th": "สำนักงานเกษตรอำเภอบางสะพาน",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1032",
+        "lat": 11.241861,
+        "lon": 99.480922
+    },
+    "G1033": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านคลองลอย",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1033",
+        "lat": 11.293193,
+        "lon": 99.375845
+    },
+    "G1034": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านถ้ำคีรีวงศ์",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1034",
+        "lat": 11.392272,
+        "lon": 99.577286
+    },
+    "G1035": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านหนองหอย",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1035",
+        "lat": 11.440851,
+        "lon": 99.502286
+    },
+    "G1036": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลเขาล้าน",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1036",
+        "lat": 11.55657,
+        "lon": 99.554901
+    },
+    "G1037": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลห้วยยาง",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1037",
+        "lat": 11.607849,
+        "lon": 99.664461
+    },
+    "G1038": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลคลองวาฬ",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1038",
+        "lat": 11.736572,
+        "lon": 99.777494
+    },
+    "G1039": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านด่านสิงขร",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1039",
+        "lat": 11.778434,
+        "lon": 99.680244
+    },
+    "G1040": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลนิคมสร้างตนเอง กม.12",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1040",
+        "lat": 11.888013,
+        "lon": 99.711927
+    },
+    "G1041": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านหนองปุหลก",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1041",
+        "lat": 12.003709,
+        "lon": 99.763704
+    },
+    "G1042": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านทุ่งโก",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1042",
+        "lat": 11.958634,
+        "lon": 99.831502
+    },
+    "G1043": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลพระครูนิยุตธรรมสุนทร",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1043",
+        "lat": 12.090716,
+        "lon": 99.950053
+    },
+    "G1044": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านรวมไทย",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1044",
+        "lat": 12.102008,
+        "lon": 99.662923
+    },
+    "G1045": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านหนองมะซาง",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1045",
+        "lat": 12.071074,
+        "lon": 99.818575
+    },
+    "G1046": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านหนองแก",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1046",
+        "lat": 12.21006,
+        "lon": 99.794235
+    },
+    "G1047": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านหนองตาเมือง",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1047",
+        "lat": 12.355327,
+        "lon": 99.842783
+    },
+    "G1048": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลเขาจ้าว",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1048",
+        "lat": 12.364396,
+        "lon": 99.693555
+    },
+    "G1049": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านแพรกตะคร้อ",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1049",
+        "lat": 12.359382,
+        "lon": 99.601047
+    },
+    "G1050": {
+        "name_th": "โครงการส่งน้ำและบำรุงรักษาปราณบุรี (เขื่อนปราณบุรี) สำนักชลประทานที่14",
+        "url": "http://eecmobile1.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G1050",
+        "lat": 12.470281,
+        "lon": 99.794406
+    },
+    "G5001": {
+        "name_th": "องค์การบริหารส่วนตำบลบางเขียด",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5001",
+        "lat": 7.331154,
+        "lon": 100.426943
+    },
+    "G5002": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านไร่",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5002",
+        "lat": 7.525373,
+        "lon": 100.283701
+    },
+    "G5003": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลนางเหล้า",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5003",
+        "lat": 7.617074,
+        "lon": 100.398813
+    },
+    "G5004": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านขาว",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5004",
+        "lat": 7.841393,
+        "lon": 100.232361
+    },
+    "G5005": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลท่ามะปราง",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5005",
+        "lat": 7.1453,
+        "lon": 100.161365
+    },
+    "G5006": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านนาป่อง",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5006",
+        "lat": 7.081264,
+        "lon": 100.605477
+    },
+    "G5007": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านหินผุด",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5007",
+        "lat": 6.956975,
+        "lon": 100.318799
+    },
+    "G5008": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลช่องเขา",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5008",
+        "lat": 6.944226,
+        "lon": 100.64519
+    },
+    "G5009": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลสะพานไม้แก่น",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5009",
+        "lat": 6.824553,
+        "lon": 100.786945
+    },
+    "G5010": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลโคกเนียน",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5010",
+        "lat": 6.775217,
+        "lon": 100.421126
+    },
+    "G5011": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลลำชิง",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5011",
+        "lat": 6.746149,
+        "lon": 100.667033
+    },
+    "G5012": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลตาฆอ",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5012",
+        "lat": 6.535868,
+        "lon": 100.998143
+    },
+    "G5013": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลทุ่งโดน",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5013",
+        "lat": 6.771077,
+        "lon": 100.979704
+    },
+    "G5014": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลควนขัน",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5014",
+        "lat": 6.626373,
+        "lon": 100.044334
+    },
+    "G5015": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านกะทูน-พิปูนล้นเกล้า",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5015",
+        "lat": 6.895392,
+        "lon": 100.019263
+    },
+    "G5016": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านในเมือง",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5016",
+        "lat": 6.860279,
+        "lon": 99.792596
+    },
+    "G5017": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านโคกทราย",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5017",
+        "lat": 7.238536,
+        "lon": 100.317203
+    },
+    "G5018": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านควนเล้าเป็ด",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5018",
+        "lat": 7.281256,
+        "lon": 100.124792
+    },
+    "G5019": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านทุ่งลาน",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5019",
+        "lat": 7.555122,
+        "lon": 100.080648
+    },
+    "G5020": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านมะกอกใต้",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5020",
+        "lat": 7.710367,
+        "lon": 100.086228
+    },
+    "G5021": {
+        "name_th": "สำนักงานเกษตรอำเภอป่าพะยอม",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5021",
+        "lat": 7.840681,
+        "lon": 99.91849
+    },
+    "G5022": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านเนินธัมมัง",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5022",
+        "lat": 8.012697,
+        "lon": 100.073938
+    },
+    "G5023": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านคชธรรมราช",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5023",
+        "lat": 8.128017,
+        "lon": 100.195911
+    },
+    "G5024": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลสามตำบล",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5024",
+        "lat": 8.07564,
+        "lon": 99.888906
+    },
+    "G5025": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านทุ่งควาย",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5025",
+        "lat": 8.069947,
+        "lon": 99.58637
+    },
+    "G5026": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านหลักช้าง",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5026",
+        "lat": 8.322929,
+        "lon": 99.54521
+    },
+    "G5027": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านสอ",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5027",
+        "lat": 8.344602,
+        "lon": 99.842394
+    },
+    "G5028": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านบนเนิน",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5028",
+        "lat": 8.361688,
+        "lon": 100.16743
+    },
+    "G5029": {
+        "name_th": "สำนักงานเกษตรอำเภอท่าศาลา",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5029",
+        "lat": 8.667231,
+        "lon": 99.932856
+    },
+    "G5030": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านน้ำฉา",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5030",
+        "lat": 8.894132,
+        "lon": 99.834606
+    },
+    "G5031": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลปากแพรก",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5031",
+        "lat": 9.20227,
+        "lon": 99.67838
+    },
+    "G5032": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านกงตาก",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5032",
+        "lat": 8.970983,
+        "lon": 99.462793
+    },
+    "G5033": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านคลองยา",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5033",
+        "lat": 8.924523,
+        "lon": 99.300854
+    },
+    "G5034": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านควนกลิ้ง",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5034",
+        "lat": 8.786313,
+        "lon": 99.098168
+    },
+    "G5035": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบางสวรรค์",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5035",
+        "lat": 8.619203,
+        "lon": 98.973684
+    },
+    "G5036": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านไสขรบ",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5036",
+        "lat": 8.615102,
+        "lon": 99.250267
+    },
+    "G5037": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลไทรทอง",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5037",
+        "lat": 8.385606,
+        "lon": 99.057261
+    },
+    "G5038": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านบางเหรียง",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5038",
+        "lat": 8.331043,
+        "lon": 99.262364
+    },
+    "G5039": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านเขาต่อ",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5039",
+        "lat": 8.570636,
+        "lon": 98.740121
+    },
+    "G5040": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านเขาแก้ว",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5040",
+        "lat": 8.358906,
+        "lon": 98.902089
+    },
+    "G5041": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านบางเหรียง",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5041",
+        "lat": 8.241543,
+        "lon": 99.156231
+    },
+    "G5042": {
+        "name_th": "สำนักงานเกษตรอำเภอลำทับ",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5042",
+        "lat": 8.069753,
+        "lon": 99.292928
+    },
+    "G5043": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านตลิ่งชัน",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5043",
+        "lat": 7.998546,
+        "lon": 98.968434
+    },
+    "G5044": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านทรายขาว",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5044",
+        "lat": 7.744869,
+        "lon": 99.265136
+    },
+    "G5045": {
+        "name_th": "โครงการชลประทานภูเก็ต (อ่างเก็บน้ำบางวาด)",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5045",
+        "lat": 7.893669,
+        "lon": 98.334227
+    },
+    "G5046": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลเขาขาว",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5046",
+        "lat": 7.79214,
+        "lon": 99.601386
+    },
+    "G5047": {
+        "name_th": "องค์การบริหารส่วนตำบลท่าสะบ้า",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5047",
+        "lat": 7.685196,
+        "lon": 99.50761
+    },
+    "G5048": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบางสัก",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5048",
+        "lat": 7.402822,
+        "lon": 99.431965
+    },
+    "G5049": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านเกาะเปียะ",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5049",
+        "lat": 7.425849,
+        "lon": 99.693932
+    },
+    "G5050": {
+        "name_th": "โรงพยาบาลส่งเสริมสุขภาพตำบลลิพัง",
+        "url": "http://eecmobile5.fortiddns.com/eec/Raingauge_Summary_Station.aspx?id=G5050",
+        "lat": 7.174454,
+        "lon": 99.782345
+    }
+}
