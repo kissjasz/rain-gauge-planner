@@ -303,7 +303,8 @@ def init_session_state():
         'last_map_click': None,
         'last_map_click_time': 0.0,
         'map_version': 0,
-        'pending_station': None
+        'pending_station': None,
+        'pending_ts': 0.0,
     }
     
     for key, default_value in defaults.items():
@@ -1126,6 +1127,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
