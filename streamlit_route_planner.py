@@ -591,6 +591,7 @@ def main():
             df = load_station_data()
             try:
                 sheet_df = load_sheet_days()
+                st.dataframe(sheet_df.head())
                 if not sheet_df.empty:
                     df = df.merge(sheet_df, on="station_id", how="left")
                 else:
@@ -1111,3 +1112,4 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
