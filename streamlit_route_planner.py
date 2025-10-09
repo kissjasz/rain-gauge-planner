@@ -545,13 +545,13 @@ def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False
                     </div>
                     """
                 else:
-                    confirm_url = f"?confirm={station_id}"
-                    remove_url  = f"?remove={station_id}"
+                    js_confirm = f"javascript:(function(){{var u=new URL(window.top.location.href);u.searchParams.set('confirm','{station_id}');window.top.location.href=u.toString();}})();"
+                    js_remove  = f"javascript:(function(){{var u=new URL(window.top.location.href);u.searchParams.set('remove','{station_id}');window.top.location.href=u.toString();}})();"
 
                     # ปุ่มใน popup ตามสถานะ
                     if not is_selected:
                         action_btn_html = f"""
-                        <a href="{confirm_url}" target="_top"
+                        <a href="{js_confirm}"
                            style="display:inline-block;background:#4CAF50;color:white;
                                   padding:6px 10px;border-radius:6px;text-decoration:none;">
                             ✅ ยืนยันเลือกสถานีนี้
@@ -559,7 +559,7 @@ def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False
                         """
                     else:
                         action_btn_html = f"""
-                        <a href="{remove_url}" target="_top"
+                        <a href="{js_remove}"
                            style="display:inline-block;background:#f44336;color:white;
                                   padding:6px 10px;border-radius:6px;text-decoration:none;">
                             ❌ ยกเลิกเลือกสถานีนี้
@@ -617,22 +617,16 @@ def main():
         sel = st.session_state.get("selected_stations", [])
 
         if "confirm" in q:
-            sid = q["confirm"][0]
+            sid = q["confirm"];  sid = sid[0] if isinstance(sid, list) else sid
             if sid not in sel:
-                sel.append(sid)
-                st.session_state.selected_stations = sel
-                st.success(f"✅ ยืนยันเลือกสถานี {sid}")
-            st.query_params.clear()   # clear query
-            st.rerun()
+                sel.append(sid); st.session_state.selected_stations = sel
+            st.query_params.clear(); st.rerun()
 
         if "remove" in q:
-            sid = q["remove"][0]
+            sid = q["remove"];  sid = sid[0] if isinstance(sid, list) else sid
             if sid in sel:
-                sel.remove(sid)
-                st.session_state.selected_stations = sel
-                st.warning(f"❌ ยกเลิกเลือกสถานี {sid}")
-            st.query_params.clear()   # clear query
-            st.rerun()
+                sel.remove(sid); st.session_state.selected_stations = sel
+            st.query_params.clear(); st.rerun()
 # =======================================================
         st.title("📡 Rain Gauge Station Viewer & Interactive Route Planner")
         
@@ -1145,6 +1139,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
