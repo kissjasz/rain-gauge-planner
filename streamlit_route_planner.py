@@ -769,9 +769,11 @@ def main():
                                 try:
                                     current_stations = st.session_state.get('selected_stations', [])
                                     pending = st.session_state.get('pending_station')
-
+                                    pending_ts = st.session_state.get('pending_ts', 0.0)
+                                    now_ts = time.time()
+                                    
                                     # คลิกซ้ำสถานีเดิม = ยืนยัน
-                                    if pending == closest_station:
+                                    if pending == closest_station and (now_ts - pending_ts) <= 10:
                                         if closest_station in current_stations:
                                             current_stations.remove(closest_station)
                                             st.success(f"❌ ยกเลิกการเลือก: {closest_station}")
@@ -785,11 +787,24 @@ def main():
 
                                         st.session_state.selected_stations = current_stations
                                         st.session_state.pending_station = None  # เคลียร์รอคลิก
+                                        st.session_state.pending_ts = 0.0
                                         # ไม่เรียก rerun ตรงนี้ ป้องกัน refresh map
+
+                                        st.session_state.last_map_click = (round(clicked_lat,5), round(clicked_lng,5))
+                                        st.session_state.last_map_click_time = now_ts
+                                        st.session_state.map_version = st.session_state.get('map_version', 0) + 1
+                                        smart_rerun()
+
+                                        
                                     else:
                                         # คลิกครั้งแรก แค่แสดง popup ข้อมูล ไม่ rerun
                                         st.session_state.pending_station = closest_station
+                                        st.session_state.pending_ts = now_ts
                                         st.info(f"คลิกอีกครั้งเพื่อยืนยัน: {closest_station}")
+
+                                        # บันทึกคลิกล่าสุดเพื่อไม่ให้ debounce บล็อกคลิกถัดไป
+                                        st.session_state.last_map_click = (round(clicked_lat,5), round(clicked_lng,5))
+                                        st.session_state.last_map_click_time = now_ts
 
                                 except Exception as selection_error:
                                     st.error(f"ข้อผิดพลาด: {selection_error}")
@@ -1111,6 +1126,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
