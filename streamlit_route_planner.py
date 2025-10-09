@@ -1015,10 +1015,10 @@ def main():
         with st.expander("📋 คำนวณแผนการตรวจสอบ", expanded=False):
             total_stations = len(df_filtered)
             
-            col1, , col3 = st.columns(3)
+            col1, col2, col3 = st.columns(3)
             with col1:
                 max_days_available = st.number_input("ระยะเวลาทั้งหมด (วัน):", min_value=1, value=30)
-            with :
+            with col2:
                 avg_stations_per_day = st.number_input("สถานีที่ตรวจได้ต่อวัน:", min_value=1, value=7)
             with col3:
                 target_stations = st.number_input("จำนวนที่ต้องการตรวจ:", min_value=1, value=min(total_stations, 50))
@@ -1111,6 +1111,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
