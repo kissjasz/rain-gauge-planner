@@ -910,7 +910,7 @@ def main():
                 )
                 start_station = station_name_map[start_display]
             
-            with :
+            with col2:
                 # ให้ฐานหลักเป็น default สำหรับ end ถ้ามี
                 default_end = len(station_options) - 1
                 if BASE_LOCATION['station_id'] in selected_stations:
@@ -1111,6 +1111,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
