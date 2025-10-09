@@ -570,8 +570,9 @@ def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False
                 if not is_base_station:
                     color = color_by_days(dnm_val)
                 # ทำ tooltip แสดงรหัสถังตลอดเวลา
-                label = f"{station_id} | {int(dnm_val)} วัน" if pd.notna(dnm_val) else station_id  # ถ้าจะใส่วันด้วย: f"{station_id} | {int(dnm_val)} วัน" if pd.notna(dnm_val) else station_id
-                tooltip = folium.Tooltip(label, permanent=True, direction="top", sticky=False)   
+                #label = f"{station_id} | {int(dnm_val)} วัน" if pd.notna(dnm_val) else station_id  # ถ้าจะใส่วันด้วย: f"{station_id} | {int(dnm_val)} วัน" if pd.notna(dnm_val) else station_id
+                show_tooltip = st.session_state.get('zoom_level', 8) >= 9
+                tooltip = folium.Tooltip(f"{station_id} | {int(dnm_val)} วัน", permanent=show_tooltip, direction="top", sticky=False)   
                 # เพิ่ม marker
                 folium.Marker(
                     [lat, lon],
@@ -686,7 +687,7 @@ def main():
                 safe_update_session_state('map_mode', 'select')
         
         with col2:
-            if st.button("🛣️ ยังไม่เปิดระบบแสดงเส้นทางบนแผนที่", help="แสดงเส้นทางบนแผนที่"):
+            if st.button("🛣️ ยังไม่เปิดให้ใช้งาน", help="แสดงเส้นทางบนแผนที่"):
                 safe_update_session_state('map_mode', 'route')
         
         with col3:
@@ -1111,6 +1112,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
