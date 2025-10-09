@@ -612,29 +612,26 @@ def main():
     """แอปพลิเคชันหลัก"""
     try:
         init_session_state()
-        # ====== ตรวจสอบ query parameter ที่มาจาก popup ======
-        query_params = st.query_params
+        # ---- handle confirm/remove from popup (must be at very top of main) ----
+        q = st.experimental_get_query_params()
+        sel = st.session_state.get("selected_stations", [])
 
-        # ✅ กรณียืนยันเลือกสถานี
-        if "confirm" in query_params:
-            sid = query_params["confirm"]
-            sel = st.session_state.get("selected_stations", [])
+        if "confirm" in q:
+            sid = q["confirm"][0]
             if sid not in sel:
                 sel.append(sid)
                 st.session_state.selected_stations = sel
                 st.success(f"✅ ยืนยันเลือกสถานี {sid}")
-            st.query_params.clear()
+            st.experimental_set_query_params()   # clear query
             st.experimental_rerun()
 
-        # ❌ กรณียกเลิกเลือกสถานี
-        if "remove" in query_params:
-            sid = query_params["remove"]
-            sel = st.session_state.get("selected_stations", [])
+        if "remove" in q:
+            sid = q["remove"][0]
             if sid in sel:
                 sel.remove(sid)
                 st.session_state.selected_stations = sel
                 st.warning(f"❌ ยกเลิกเลือกสถานี {sid}")
-            st.query_params.clear()
+            st.experimental_set_query_params()   # clear query
             st.experimental_rerun()
 # =======================================================
         st.title("📡 Rain Gauge Station Viewer & Interactive Route Planner")
@@ -812,17 +809,12 @@ def main():
                             
                             # เลือก/ยกเลิกการเลือกสถานี
                             if closest_station:
-                                try:
-                                    # เก็บสถานีที่คลิกไว้ใน pending
-                                    st.session_state.pending_station = closest_station
-                                    st.info(f"เลือก {closest_station} แล้ว — กดยืนยันใน popup หรือปุ่ม '+ เพิ่มสถานีที่เลือก'")
-                                    st.session_state.last_map_click = current_click
-                                    st.session_state.last_map_click_time = now_ts
-                                    # ไม่แก้ selected_stations ที่นี่ และไม่ smart_rerun()
-                                except Exception as e:
-                                    st.error(f"ข้อผิดพลาดในการคลิก: {str(e)}")
+                                st.session_state.pending_station = closest_station
+                                st.info(f"เลือก {closest_station} แล้ว — กดยืนยันใน popup หรือปุ่ม '+ เพิ่มสถานีที่เลือก'")
+                                st.session_state.last_map_click = current_click
+                                st.session_state.last_map_click_time = now_ts
                             else:
-                                st.caption("คลิกใกล้ marker สถานีเพื่อดูข้อมูล จากนั้นกดยืนยันใน popup หรือปุ่ม '+ เพิ่มสถานีที่เลือก'")
+                                st.caption("แตะ marker เพื่อดูข้อมูล แล้วกดยืนยันใน popup หรือปุ่มด้านล่าง")
                             
                 except ImportError:
                     st.error("❌ กรุณาติดตั้ง streamlit-folium: pip install streamlit-folium")
@@ -1138,6 +1130,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
