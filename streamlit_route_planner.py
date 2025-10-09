@@ -565,6 +565,16 @@ def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False
                             ❌ ยกเลิกเลือกสถานีนี้
                         </a>
                         """
+                        popup_text = f"""
+                        <div style="min-width:200px;text-align:center;">
+                        <b style="color:{'red' if is_selected else 'blue'};">{station_id}</b><br>
+                        <strong>{name_th}</strong><br>
+                        ตำแหน่ง: {lat:.4f}, {lon:.4f}<br>
+                        {days_txt}
+                        <div style="margin-top:8px;">{action_btn_html}</div>
+                        </div>
+                        """
+                        
                 def color_by_days(d):
                     if d is None or not pd.notna(d): 
                         return "blue"
@@ -1143,6 +1153,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
