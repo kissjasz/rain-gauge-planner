@@ -813,31 +813,16 @@ def main():
                             # เลือก/ยกเลิกการเลือกสถานี
                             if closest_station:
                                 try:
-                                    current_stations = st.session_state.get('selected_stations', [])
-                                    if closest_station in current_stations:
-                                        current_stations.remove(closest_station)
-                                        st.success(f"❌ ยกเลิกการเลือก: {closest_station}")
-                                    else:
-                                        MAX_STATIONS = 100
-                                        if len(current_stations) < MAX_STATIONS:
-                                            current_stations.append(closest_station)
-                                            st.success(f"✅ เลือก: {closest_station}")
-                                        else:
-                                            st.warning(f"⚠️ เลือกได้สูงสุด {MAX_STATIONS} สถานี")
-                                    st.session_state.selected_stations = current_stations
-
-                                    # อัปเดตสถานะคลิก
+                                    # เก็บสถานีที่คลิกไว้ใน pending
+                                    st.session_state.pending_station = closest_station
+                                    st.info(f"เลือก {closest_station} แล้ว — กดยืนยันใน popup หรือปุ่ม '+ เพิ่มสถานีที่เลือก'")
                                     st.session_state.last_map_click = current_click
                                     st.session_state.last_map_click_time = now_ts
-                                    st.session_state.map_version = st.session_state.get('map_version', 0) + 1
-
-                                    # ให้รีเฟรช map เพื่ออัปเดตสี marker
-                                    smart_rerun()
-
-                                except Exception as selection_error:
-                                    st.error(f"ข้อผิดพลาดในการจัดการการเลือก: {str(selection_error)}")
+                                    # ไม่แก้ selected_stations ที่นี่ และไม่ smart_rerun()
+                                except Exception as e:
+                                    st.error(f"ข้อผิดพลาดในการคลิก: {str(e)}")
                             else:
-                                st.caption("คลิกใกล้ marker สถานีเพื่อเลือก (≤ 1–2 km หากซูมไกล)")
+                                st.caption("คลิกใกล้ marker สถานีเพื่อดูข้อมูล จากนั้นกดยืนยันใน popup หรือปุ่ม '+ เพิ่มสถานีที่เลือก'")
                             
                 except ImportError:
                     st.error("❌ กรุณาติดตั้ง streamlit-folium: pip install streamlit-folium")
@@ -1153,6 +1138,7 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
+
 
 
 
