@@ -9,8 +9,6 @@ st.markdown("""
         }
     </style>
 """, unsafe_allow_html=True)
-# ใส่ไว้ตอนต้นหน้า ที่โซน sidebar หรือ header ก็ได้
-show_tooltip = st.toggle("แสดง Tooltip", value=True, key="show_tooltip")
 import pandas as pd
 import json
 import os
