@@ -9,7 +9,8 @@ st.markdown("""
         }
     </style>
 """, unsafe_allow_html=True)
-
+# ใส่ไว้ตอนต้นหน้า ที่โซน sidebar หรือ header ก็ได้
+show_tooltip = st.toggle("แสดง Tooltip", value=True, key="show_tooltip")
 import pandas as pd
 import json
 import os
@@ -155,7 +156,7 @@ def find_nearest_station_optimized(clicked_lat: float, clicked_lng: float, df: p
         return None
 
 # ✅ Create Route Map Function (Define before main)
-def create_route_map(route_info: List[Dict], path_coords: List[List[float]], total_distance: float):
+def create_route_map(route_info: List[Dict], path_coords: List[List[float]], total_distance: float, show_tooltip: bool = True):
     """สร้างแผนที่แสดงเส้นทาง"""
     try:
         import folium
@@ -202,7 +203,7 @@ def create_route_map(route_info: List[Dict], path_coords: List[List[float]], tot
                 folium.Marker(
                     [info['lat'], info['lon']],
                     popup=folium.Popup(popup_text, max_width=200),
-                    tooltip=f"{info['order']}. {info['station_id']}",
+                    tooltip=(f"{info['order']}. {info['station_id']}" if show_tooltip else None),
                     icon=folium.Icon(color=color, icon=icon)
                 ).add_to(route_map)
             except Exception as marker_error:
@@ -452,7 +453,7 @@ def calculate_optimal_route(
         return [], 0.0
 
 # ✅ Interactive Map Functions
-def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False):
+def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False, show_tooltip: bool = True):
     """สร้างแผนที่ interactive พร้อม error handling"""
     try:
         import folium
@@ -575,15 +576,15 @@ def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False
                 if not is_base_station:
                     color = color_by_days(dnm_val)
                 # ทำ tooltip แสดงรหัสถังตลอดเวลา
-                label = f"{station_id} | {int(dnm_val)} วัน" if pd.notna(dnm_val) else station_id  # ถ้าจะใส่วันด้วย: f"{station_id} | {int(dnm_val)} วัน" if pd.notna(dnm_val) else station_id
-                tooltip = folium.Tooltip(label, permanent=True, direction="top", sticky=False)   
-                # เพิ่ม marker
+                label = f"{station_id} | {int(dnm_val)} วัน" if pd.notna(dnm_val) else station_id
+                tooltip_obj = folium.Tooltip(label, permanent=True, direction="top", sticky=False) if show_tooltip else None
+
                 folium.Marker(
                     [lat, lon],
                     popup=folium.Popup(popup_text, max_width=250),
-                    tooltip=tooltip,   # ← เปลี่ยนตรงนี้
+                    tooltip=tooltip_obj,
                     icon=folium.Icon(color=color, icon=icon, prefix=prefix)
-                ).add_to(m)
+                    ).add_to(m)
                 
             except Exception as marker_error:
                 continue  # ข้าม marker ที่มีปัญหา
@@ -733,7 +734,7 @@ def main():
         if not df_filtered.empty or include_base:
             # บังคับรีสร้าง key ของแผนที่เมื่อมีการเลือก/ยกเลิก เพื่อให้ event handler ใหม่ทำงานเสมอ
             map_key = f"main_map_{st.session_state.get('map_version', 0)}"
-            map_obj = create_interactive_map(df_filtered, include_base)
+            map_obj = create_interactive_map(df_filtered, include_base, show_tooltip)
             if map_obj:
                 # แสดงคำแนะนำการใช้งาน
                 map_mode = st.session_state.get('map_mode', 'select')
@@ -1086,7 +1087,7 @@ def main():
 
                     st.subheader("🗺️ แผนที่เส้นทางการเดินทาง (ล่าสุด)")
                     try:
-                        route_map = create_route_map(route_info, path_coords, min_distance)
+                        route_map = create_route_map(route_info, path_coords, min_distance, show_tooltip)
                         if route_map:
                             from streamlit_folium import st_folium
                             st_folium(route_map, width=700, height=500, key="route_map_latest")
