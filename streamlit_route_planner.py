@@ -678,6 +678,9 @@ def main():
         # Interactive Map Section
         st.subheader("🗺️ แผนที่ Interactive สำหรับเลือกสถานี")
         
+        # สวิตช์อยู่เหนือแผนที่
+        show_tooltip = st.toggle("แสดง Tooltip", value=st.session_state.get("show_tooltip", True), key="show_tooltip")
+        
         # เพิ่มตัวเลือกรวมฐานหลัก
         col_base, col_info = st.columns([1, 2])
         with col_base:
