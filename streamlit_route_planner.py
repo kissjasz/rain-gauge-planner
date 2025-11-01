@@ -1079,8 +1079,8 @@ def main():
                 if len(path_coords) >= 2:
                     st.markdown("**🧭 เปิดใน Google Maps:**")
                     try:
-                        maps_url = "https://www.google.com/maps/dir/?api=1&waypoints=" + "/".join([
-                        f"{coord[0]},{coord[1]}" for coord in path_coords
+                        maps_url = "https://www.google.com/maps/dir/" + "/".join([
+                            f"{coord[0]},{coord[1]}" for coord in path_coords
                         ])
                         st.markdown(f"[📱 เปิดเส้นทางใน Google Maps]({maps_url})")
                     except Exception:
@@ -1136,7 +1136,6 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
-
 
 
 
