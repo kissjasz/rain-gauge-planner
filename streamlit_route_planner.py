@@ -2,6 +2,39 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 st.set_page_config(page_title="Rain Gauge Monitor", layout="wide")
+
+# --- Sidebar: ดึงข้อมูลล่าสุดจากเว็บ EEC ---
+with st.sidebar:
+    st.subheader("อัปเดตข้อมูลล่าสุด")
+    debug_fetch = st.toggle("โหมดดีบัก (main.py)", value=False)
+    if st.button("↻ ดึงข้อมูลล่าสุดจากเว็บ EEC"):
+        try:
+            import importlib, sys, subprocess, time as _time
+            # ลองเรียก main.main() โดยตรงก่อน
+            try:
+                import main as eec_main
+                eec_main.main(debug=debug_fetch, test_api=False)
+                st.success("อัปเดต stations.json สำเร็จด้วยการเรียก main.main()")
+            except Exception as e:
+                st.info(f"เรียกใช้ main.main() ตรงๆ ไม่สำเร็จ: {e}")
+                # ตกลงไปเรียกผ่าน subprocess
+                cmd = [sys.executable, "main.py"]
+                st.write(f"รันคำสั่ง: {' '.join(cmd)}")
+                cp = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
+                if cp.returncode == 0:
+                    st.success("อัปเดต stations.json สำเร็จด้วย subprocess")
+                else:
+                    st.error(f"รัน subprocess ผิดพลาด: code={cp.returncode}")
+                    st.code(cp.stdout + "\n--- STDERR ---\n" + cp.stderr)
+            # เคลียร์ cache แล้วโหลดใหม่
+            try:
+                st.cache_data.clear()
+                st.success("ล้าง cache และรีโหลดข้อมูลใหม่แล้ว")
+            except Exception:
+                pass
+        except Exception as e:
+            st.error(f"อัปเดตล้มเหลว: {e}")
+
 st.markdown("""
     <style>
         section[data-testid="stSidebar"][aria-expanded="true"]{
@@ -60,6 +93,14 @@ BASE_LOCATION = {
 
  
 
+
+# --- Google Maps link helper: origin = user's current location ---
+def build_google_maps_link(lat: float, lon: float) -> str:
+    try:
+        return f"https://www.google.com/maps/dir/?api=1&destination={float(lat)},{float(lon)}"
+    except Exception:
+        return ""
+
 # ✅ Utility Functions (Define first)
 def safe_float_conversion(value, default=0.0):
     """แปลงค่าเป็น float อย่างปลอดภัย"""
@@ -74,9 +115,12 @@ def safe_get_station_name(df: pd.DataFrame, station_id: str, default: str = 'ไ
     """ดึงชื่อสถานีอย่างปลอดภัย"""
     try:
         station_info = df[df['station_id'] == station_id]
-        if not station_info.empty and 'name_th' in station_info.columns:
-            name = station_info.iloc[0]['name_th']
-            return str(name) if pd.notna(name) else default
+        if not station_info.empty:
+            # ลำดับความสำคัญ: name_th > name > name_en
+            for col in ['name_th','name','name_en']:
+                if col in station_info.columns:
+                    val = station_info.iloc[0][col]
+                    return str(val) if pd.notna(val) else default
         return default
     except Exception:
         return default
@@ -246,55 +290,91 @@ def create_route_map(route_info: List[Dict], path_coords: List[List[float]], tot
 
 # ✅ Data Loading Functions
 @st.cache_data(ttl=3600)
-def load_station_data(file_path: str = 'Latlonstation_config.json') -> pd.DataFrame:
-    """โหลดข้อมูลสถานีพร้อม error handling"""
+@st.cache_data(ttl=3600)
+def load_station_data(
+    file_path: str = "stations.json",
+    th_file: str = "Latlonstation_config.json",
+) -> pd.DataFrame:
+    """โหลดสถานีจาก stations.json แล้วผสานชื่อไทย/URL จาก Latlonstation_config.json"""
     try:
+        # --- load stations.json ---
         if not os.path.exists(file_path):
-            st.warning(f"⚠️ ไม่พบไฟล์ {file_path} - ใช้ข้อมูลตัวอย่าง")
-            sample_data = {
-                'G1001': {'name_th': 'สถานีตัวอย่าง 1', 'lat': 13.7563, 'lon': 100.5018, 'url': ''},
-                'G1002': {'name_th': 'สถานีตัวอย่าง 2', 'lat': 13.7263, 'lon': 100.5318, 'url': ''},
-                'G1003': {'name_th': 'สถานีตัวอย่าง 3', 'lat': 8.5000, 'lon': 98.5000, 'url': ''}
-            }
-            return pd.DataFrame.from_dict(sample_data, orient='index').reset_index().rename(columns={'index': 'station_id'})
-        
-        with open(file_path, 'r', encoding='utf-8') as f:
+            st.error(f"❌ ไม่พบไฟล์ {file_path}")
+            return pd.DataFrame()
+
+        with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
-        
-        if not data:
-            st.error("❌ ไฟล์ข้อมูลว่างเปล่า")
+
+        # stations.json อาจเป็น list หรือ dict
+        if isinstance(data, list):
+            df = pd.DataFrame(data)
+        elif isinstance(data, dict):
+            df = pd.DataFrame.from_dict(data, orient="index").reset_index().rename(columns={"index":"station_code"})
+        else:
+            st.error("❌ โครงสร้าง stations.json ไม่รองรับ")
             return pd.DataFrame()
-        
-        df = pd.DataFrame.from_dict(data, orient='index')
-        df.reset_index(inplace=True)
-        df.rename(columns={'index': 'station_id'}, inplace=True)
-        
-        # ✅ Data validation และ cleaning
-        required_columns = ['station_id', 'lat', 'lon']
-        missing_columns = [col for col in required_columns if col not in df.columns]
-        if missing_columns:
-            st.error(f"❌ ข้อมูลไม่สมบูรณ์ ขาดคอลัมน์: {missing_columns}")
-            return pd.DataFrame()
-        
-        # Clean และ validate ข้อมูล
-        df['lat'] = pd.to_numeric(df['lat'], errors='coerce')
-        df['lon'] = pd.to_numeric(df['lon'], errors='coerce')
-        df['name_th'] = df.get('name_th', '').fillna('ไม่มีชื่อ')
-        df['url'] = df.get('url', '').fillna('')
-        
-        # ลบแถวที่มีพิกัดไม่ถูกต้อง
-        original_count = len(df)
-        df = df.dropna(subset=['lat', 'lon'])
-        if len(df) < original_count:
-            st.info(f"ℹ️ กรองข้อมูลที่ไม่สมบูรณ์: {original_count - len(df)} รายการ")
-        
-        return df
-        
+
+        # normalize คอลัมน์รหัสและชื่อ
+        if "station_code" in df.columns and "station_id" not in df.columns:
+            df.rename(columns={"station_code":"station_id"}, inplace=True)
+        if "code" in df.columns and "station_id" not in df.columns:
+            df.rename(columns={"code":"station_id"}, inplace=True)
+
+        # เก็บทั้งชื่ออังกฤษดิบ และคอลัมน์ name มาตรฐาน
+        if "name_en" not in df.columns and "name" in df.columns:
+            df.rename(columns={"name": "name_en"}, inplace=True)
+
+        # บังคับคีย์ขั้นต่ำ
+        for c in ["station_id","lat","lon"]:
+            if c not in df.columns:
+                df[c] = None
+
+        # types + กรองพิกัดว่าง
+        df["station_id"] = df["station_id"].astype(str)
+        df["lat"]  = pd.to_numeric(df["lat"], errors="coerce")
+        df["lon"]  = pd.to_numeric(df["lon"], errors="coerce")
+        before = len(df)
+        df = df.dropna(subset=["lat","lon"])
+        if len(df) < before:
+            st.info(f"ℹ️ กรองแถวที่ไม่มีพิกัดออก {before-len(df)} รายการ")
+
+        # --- merge ชื่อไทย/URL จาก Latlonstation_config.json ถ้ามี ---
+        name_th_df = pd.DataFrame()
+        if os.path.exists(th_file):
+            with open(th_file, "r", encoding="utf-8") as f:
+                th_data = json.load(f)  # dict: {G1001: {name_th, url, lat, lon}}
+            if isinstance(th_data, dict):
+                name_th_df = (
+                    pd.DataFrame.from_dict(th_data, orient="index")
+                    .reset_index()
+                    .rename(columns={"index":"station_id"})
+                )[["station_id","name_th","url"]]
+                name_th_df["station_id"] = name_th_df["station_id"].astype(str)
+
+        if not name_th_df.empty:
+            df = df.merge(name_th_df, on="station_id", how="left")
+
+        # คอลัมน์ชื่อมาตรฐาน: ให้ชื่อไทยมาก่อน > อังกฤษ > ว่าง
+        if "name_th" not in df.columns:
+            df["name_th"] = pd.NA
+        if "name_en" not in df.columns:
+            df["name_en"] = pd.NA
+        df["name"] = df["name_th"].fillna(df["name_en"]).fillna("")
+
+        # URL ถ้าไม่มีจากไฟล์ไทย ให้ค่าว่าง
+        if "url" not in df.columns:
+            df["url"] = ""
+
+        # คงคอลัมน์สำคัญให้งานอื่นใช้
+        keep_first = ["station_id","name","name_th","name_en","lat","lon","status","date","url"]
+        keep = [c for c in keep_first if c in df.columns] + [c for c in df.columns if c not in keep_first]
+        return df[keep]
+
     except json.JSONDecodeError as e:
-        st.error(f"❌ ไฟล์ JSON ไม่ถูกต้อง: {str(e)}")
+        st.error(f"❌ JSON ไม่ถูกต้อง: {e}")
         return pd.DataFrame()
     except Exception as e:
-        st.error(f"❌ เกิดข้อผิดพลาดในการโหลดข้อมูล: {str(e)}")
+        st.error(f"❌ โหลดข้อมูลล้มเหลว: {e}")
         return pd.DataFrame()
 
 # ✅ Session State Management
@@ -546,18 +626,28 @@ def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False
                     <strong>🎯 ฐานปฏิบัติการหลัก</strong>
                     </div>
                     <small style="color: #666;">
-                    <a href="{row.get('url', '#')}" target="_blank">📍 ดูใน Google Maps</a>
+                    <a href="{build_google_maps_link(lat, lon)}" target="_blank">📍 เปิดเส้นทางจากตำแหน่งของคุณ</a>
                     </small>
                     </div>
                     """
                 else:
                     popup_text = f"""
-                    <div style="min-width:200px;text-align:center;">
+                    <div style="min-width:220px;text-align:center;">
                     <b style="color:{'red' if is_selected else 'blue'};">{station_id}</b><br>
                     <strong>{name_th}</strong><br>
                     ตำแหน่ง: {lat:.4f}, {lon:.4f}<br>
                     {days_txt}
+                    <div style="margin-top:6px; text-align:left; font-size:12px;">
+                        <div><b>สถานะ:</b> {str(row.get('status', 'UNKNOWN'))}</div>
+                        <div><b>อัปเดต:</b> {str(row.get('date', '-'))}</div>
+                        <div><b>Battery:</b> {str(row.get('battery_v', '-'))} V</div>
+                        <div><b>Solar:</b> {str(row.get('solar_volt_v', '-'))} V</div>
+                        <div><b>Temp:</b> {str(row.get('temperature_c', '-'))} °C</div>
+                        <div><b>RH:</b> {str(row.get('humidity_pct', '-'))} %</div>
+                        <div><b>Rain:</b> {str(row.get('rain', '-'))}</div>
+                    </div>
                     <div style="margin-top:8px;color:#666;">แตะเพื่อดูข้อมูล แล้วไปกดยืนยันใต้แผนที่</div>
+                    <small style="color:#666;"><a href="{build_google_maps_link(lat, lon)}" target="_blank">📍 เปิดเส้นทางจากตำแหน่งของคุณ</a></small>
                     </div>
                     """
                         
@@ -574,7 +664,7 @@ def create_interactive_map(df_filtered: pd.DataFrame, include_base: bool = False
                 if not is_base_station:
                     color = color_by_days(dnm_val)
                 # ทำ tooltip แสดงรหัสถังตลอดเวลา
-                label = f"{station_id} | {int(dnm_val)} วัน" if pd.notna(dnm_val) else station_id
+                label = f"{station_id} | {str(row.get('status','UNKNOWN'))}"
                 tooltip_obj = folium.Tooltip(label, permanent=True, direction="top", sticky=False) if show_tooltip else None
 
                 folium.Marker(
@@ -621,10 +711,10 @@ def main():
             df = load_station_data()
             try:
                 sheet_df = load_sheet_days()
-                if not sheet_df.empty:
+                if not sheet_df.empty and 'station_id' in sheet_df.columns:
                     df = df.merge(sheet_df, on="station_id", how="left")
                 else:
-                    st.warning("ไม่พบข้อมูลจาก Google Sheet")
+                    st.warning("ไม่พบข้อมูลจาก Google Sheet หรือรูปแบบคอลัมน์ไม่ถูกต้อง")
             except Exception as e:
                 st.warning(f"โหลดชีตไม่ได้: {e}")
         
@@ -659,6 +749,23 @@ def main():
         if only_with_coords:
             df_filtered = df_filtered.dropna(subset=['lat', 'lon'])
         
+
+        # ตารางสถานะจาก stations.json
+        st.subheader("📊 ตารางสถานะจากไฟล์ stations.json")
+        if 'status' in df_filtered.columns:
+            tabs = st.tabs(["TIMEOUT", "DISCONNECT", "OFFLINE", "ONLINE", "UNKNOWN"])            
+            status_cols = [c for c in ["station_id","name_th","status","date","battery_v","solar_volt_v","temperature_c","humidity_pct","rain","lat","lon"] if c in df_filtered.columns]
+            status_map = {"TIMEOUT":0, "DISCONNECT":1, "OFFLINE":2, "ONLINE":3, "UNKNOWN":4}
+            for st_name, idx in status_map.items():
+                with tabs[idx]:
+                    sub = df_filtered[df_filtered['status'].str.upper() == st_name] if 'status' in df_filtered.columns else pd.DataFrame()
+                    if not sub.empty:
+                        st.dataframe(sub[status_cols], use_container_width=True, hide_index=True)
+                    else:
+                        st.caption("ไม่มีสถานีสถานะ " + st_name)
+        else:
+            st.caption("ไฟล์ stations.json ไม่มีคอลัมน์สถานะให้แสดงตาราง")
+
         # แสดงสถิติ
         st.sidebar.metric("จำนวนสถานีทั้งหมด", len(df))
         st.sidebar.metric("สถานีที่แสดง", len(df_filtered))
@@ -1036,7 +1143,7 @@ def main():
                 lat, lon = row.iloc[0]["lat"], row.iloc[0]["lon"]
                 name = row.iloc[0].get("name_th", "ไม่ทราบชื่อ")
                 st.success(f"📍 {sid} – {name}")
-                st.markdown(f"[📱 เปิดใน Google Maps](https://www.google.com/maps?q={lat},{lon})")
+                st.markdown(f"[📱 เปิดเส้นทางจากตำแหน่งของคุณ](https://www.google.com/maps/dir/?api=1&destination={lat},{lon})")
             else:
                 st.warning("ไม่พบข้อมูลสถานีที่เลือก")
         else:
@@ -1085,14 +1192,17 @@ def main():
                     st.write(f"{info['order']}. {icon} **{info['station_id']}** - {info['name_th']}")
 
                 if len(path_coords) >= 2:
-                    st.markdown("**🧭 เปิดใน Google Maps:**")
                     try:
-                        maps_url = "https://www.google.com/maps/dir/" + "/".join([
-                            f"{coord[0]},{coord[1]}" for coord in path_coords
-                        ])
+                        # Build Google Maps link: origin = user's current location
+                        dest = path_coords[-1]
+                        waypoints = path_coords[:-1]
+                        wp = "|".join([f"{c[0]},{c[1]}" for c in waypoints]) if waypoints else None
+                        base = f"https://www.google.com/maps/dir/?api=1&destination={dest[0]},{dest[1]}"
+                        maps_url = base + (f"&waypoints={wp}" if wp else "")
                         st.markdown(f"[📱 เปิดเส้นทางใน Google Maps]({maps_url})")
                     except Exception:
                         pass
+
 
                     st.subheader("🗺️ แผนที่เส้นทางการเดินทาง (ล่าสุด)")
                     try:
@@ -1144,45 +1254,5 @@ streamlit-folium>=0.13.0
                 "text/plain"
 
             )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
