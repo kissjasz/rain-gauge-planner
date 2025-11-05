@@ -7,3 +7,5 @@ folium>=0.14.0
 streamlit-folium>=0.13.0
 gspread
 google-auth
+beautifulsoup4==4.12.2
+requests==2.31.0
